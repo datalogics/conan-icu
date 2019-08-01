@@ -12,7 +12,7 @@ class ICUBase(ConanFile):
     license = "ICU"
     description = "ICU is a mature, widely used set of C/C++ and Java libraries " \
                   "providing Unicode and Globalization support for software applications."
-    url = "https://github.com/bincrafters/conan-icu"
+    url = "https://github.com/datalogics/conan-icu"
     topics = ("conan", "icu", "icu4c", "i see you", "unicode")
     author = "Bincrafters <bincrafters@gmail.com>"
     exports = ["LICENSE.md", "icu_base.py"]
@@ -148,9 +148,12 @@ class ICUBase(ConanFile):
     @property
     def build_config_args(self):
         prefix = self.package_folder.replace('\\', '/')
-
+        # this list sould be closer to what's in runConfigureICU
         platform = {("Windows", "Visual Studio"): "Cygwin/MSVC",
                     ("Windows", "gcc"): "MinGW",
+                    ("AIX", "xlc"): "AIX",
+                    ("AIX", "gcc"): "AIX/GCC",
+                    ("SunOS", "gcc"): "Solaris/GCC",
                     ("Linux", "gcc"): "Linux/gcc",
                     ("Linux", "clang"): "Linux",
                     ("Macos", "gcc"): "MacOSX",
