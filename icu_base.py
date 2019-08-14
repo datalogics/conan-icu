@@ -152,7 +152,7 @@ class ICUBase(ConanFile):
                     ("Windows", "gcc"): "MinGW",
                     ("AIX", "gcc"): "AIX/GCC",
                     ("AIX", "xlc"): "AIX",
-                    ("Solaris", "gcc"): "Solaris/GCC",
+                    ("SunOS", "gcc"): "Solaris/GCC",
                     ("Linux", "gcc"): "Linux/gcc",
                     ("Linux", "clang"): "Linux",
                     ("Macos", "gcc"): "MacOSX",
