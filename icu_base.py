@@ -89,6 +89,11 @@ class ICUBase(ConanFile):
             tools.replace_in_file(run_configure_icu_file, "-MDd", flags)
             tools.replace_in_file(run_configure_icu_file, "-MD", flags)
 
+            toolset = self.settings.get_safe("compiler.toolset") or ""
+            if "LLVM" in toolset.upper():
+                tools.replace_in_file(run_configure_icu_file, "CC=cl", "CC=clang-cl")
+                tools.replace_in_file(run_configure_icu_file, "CXX=cl", "CXX=clang-cl")
+
         # self._replace_pythonpath() # ICU 64.1
         self._workaround_icu_20545()
 
