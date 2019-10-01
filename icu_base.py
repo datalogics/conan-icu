@@ -42,7 +42,7 @@ class ICUBase(ConanFile):
     def build_requirements(self):
         if self._the_os == "Windows":
             #self.build_requires("cygwin_installer/2.9.0@bincrafters/stable")
-            self.build_requires("msys2_installer/latest@bincrafters/stable")
+            self.build_requires("msys2/20190524@datalogics/stable")
             if self.settings.compiler == "gcc" and tools.os_info.is_windows:
                 self.build_requires("mingw_installer/1.0@conan/stable")
 
@@ -89,7 +89,7 @@ class ICUBase(ConanFile):
             tools.replace_in_file(run_configure_icu_file, "-MDd", flags)
             tools.replace_in_file(run_configure_icu_file, "-MD", flags)
 
-        self._replace_pythonpath() # ICU 64.1
+        # self._replace_pythonpath() # ICU 64.1
         self._workaround_icu_20545()
 
         self._env_build = AutoToolsBuildEnvironment(self)
