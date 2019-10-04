@@ -202,6 +202,8 @@ class ICUBase(ConanFile):
             args.extend(["--disable-static", "--enable-shared"])
         else:
             args.extend(["--enable-static", "--disable-shared"])
+        if not self.options.get_safe("with_extras"):
+            args.append('--disable-extras')
         if not self.options.get_safe("with_unit_tests"):
             args.append('--disable-tests')
         return args
