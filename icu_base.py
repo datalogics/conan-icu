@@ -117,9 +117,9 @@ class ICUBase(ConanFile):
 
                     self.run(self._build_config_cmd, win_bash=tools.os_info.is_windows)
                     if self.options.get_safe("silent"):
-                        silent = '--silent' if self.options.silent else 'VERBOSE=1'
-                    else:
                         silent = '--silent'
+                    else:
+                        silent = 'VERBOSE=1'
                     command = "make {silent} -j {cpu_count}".format(silent=silent,
                                                                     cpu_count=tools.cpu_count())
                     self.run(command, win_bash=tools.os_info.is_windows)
