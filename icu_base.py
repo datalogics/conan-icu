@@ -110,8 +110,11 @@ class ICUBase(ConanFile):
         os.mkdir(build_dir)
 
         make_args = list()
-        if self.settings.os == 'SunOS' and self.settings.arch in ['x86_64', 'sparcv9']:
-            make_args.append('LDLIBRARYPATH_ENVVAR=LD_LIBRARY_PATH_64')
+        if self.settings.os == 'SunOS':
+            if self.settings.arch in ['x86_64', 'sparcv9']:
+                make_args.append('LDLIBRARYPATH_ENVVAR=LD_LIBRARY_PATH_64')
+            else:
+                make_args.append('LDLIBRARYPATH_ENVVAR=LD_LIBRARY_PATH_32')
 
         with tools.vcvars(self.settings) if self._is_msvc else tools.no_op():
             with tools.environment_append(self._env_build.vars):
