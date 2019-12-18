@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 import os
 import glob
 import platform
@@ -15,7 +13,6 @@ class ICUBase(ConanFile):
                   "providing Unicode and Globalization support for software applications."
     url = "https://github.com/bincrafters/conan-icu"
     topics = ("conan", "icu", "icu4c", "i see you", "unicode")
-    author = "Bincrafters <bincrafters@gmail.com>"
     exports = ["LICENSE.md", "icu_base.py"]
     # exports_sources = ["patches/*.patch"]
     _source_subfolder = "source_subfolder"
@@ -43,8 +40,6 @@ class ICUBase(ConanFile):
         if self._the_os == "Windows":
             #self.build_requires("cygwin_installer/2.9.0@bincrafters/stable")
             self.build_requires("msys2/20190524@datalogics/stable")
-            if self.settings.compiler == "gcc" and tools.os_info.is_windows:
-                self.build_requires("mingw_installer/1.0@conan/stable")
 
     def source(self):
         version = self.version.replace('.', '-')
