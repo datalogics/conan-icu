@@ -5,15 +5,15 @@ Subject: [PATCH] ICU-20958 Prevent SEGV_MAPERR in append
 
 See #971
 ---
- icu4c/source/common/unistr.cpp          |  6 ++-
- icu4c/source/test/intltest/ustrtest.cpp | 62 +++++++++++++++++++++++++
- icu4c/source/test/intltest/ustrtest.h   |  1 +
+ source/common/unistr.cpp          |  6 ++-
+ source/test/intltest/ustrtest.cpp | 62 +++++++++++++++++++++++++
+ source/test/intltest/ustrtest.h   |  1 +
  3 files changed, 68 insertions(+), 1 deletion(-)
 
-diff --git a/icu4c/source/common/unistr.cpp b/icu4c/source/common/unistr.cpp
+diff --git a/source/common/unistr.cpp b/source/common/unistr.cpp
 index 901bb3358ba..077b4d6ef20 100644
---- a/icu4c/source/common/unistr.cpp
-+++ b/icu4c/source/common/unistr.cpp
+--- a/source/common/unistr.cpp
++++ b/source/common/unistr.cpp
 @@ -1563,7 +1563,11 @@ UnicodeString::doAppend(const UChar *srcChars, int32_t srcStart, int32_t srcLeng
    }
  
@@ -27,10 +27,10 @@ index 901bb3358ba..077b4d6ef20 100644
  
    // Check for append onto ourself
    const UChar* oldArray = getArrayStart();
-diff --git a/icu4c/source/test/intltest/ustrtest.cpp b/icu4c/source/test/intltest/ustrtest.cpp
+diff --git a/source/test/intltest/ustrtest.cpp b/source/test/intltest/ustrtest.cpp
 index b6515ea813c..ad38bdf53a3 100644
---- a/icu4c/source/test/intltest/ustrtest.cpp
-+++ b/icu4c/source/test/intltest/ustrtest.cpp
+--- a/source/test/intltest/ustrtest.cpp
++++ b/source/test/intltest/ustrtest.cpp
 @@ -67,6 +67,7 @@ void UnicodeStringTest::runIndexedTest( int32_t index, UBool exec, const char* &
      TESTCASE_AUTO(TestWCharPointers);
      TESTCASE_AUTO(TestNullPointers);
@@ -104,10 +104,10 @@ index b6515ea813c..ad38bdf53a3 100644
 +        }
 +    }
 +}
-diff --git a/icu4c/source/test/intltest/ustrtest.h b/icu4c/source/test/intltest/ustrtest.h
+diff --git a/source/test/intltest/ustrtest.h b/source/test/intltest/ustrtest.h
 index 218befdcc68..4a356a92c7a 100644
---- a/icu4c/source/test/intltest/ustrtest.h
-+++ b/icu4c/source/test/intltest/ustrtest.h
+--- a/source/test/intltest/ustrtest.h
++++ b/source/test/intltest/ustrtest.h
 @@ -97,6 +97,7 @@ class UnicodeStringTest: public IntlTest {
      void TestWCharPointers();
      void TestNullPointers();
