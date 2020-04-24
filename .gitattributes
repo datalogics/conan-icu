@@ -1,1 +1,3 @@
 *.py text eol=lf
+conandata.yml text eol=lf
+LICENSE.md text eol=lf 
