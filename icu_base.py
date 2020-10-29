@@ -16,7 +16,7 @@ class ICUBase(ConanFile):
     topics = ("conan", "icu", "icu4c", "i see you", "unicode")
     author = "Bincrafters <bincrafters@gmail.com>"
     exports = ["LICENSE.md", "icu_base.py"]
-    # exports_sources = ["patches/*.patch"]
+    exports_sources = ["patches/*.patch"]
     _source_subfolder = "source_subfolder"
     _build_subfolder = "build_subfolder"
     _env_build = None
@@ -118,8 +118,13 @@ class ICUBase(ConanFile):
                     else:
                         make_args.append('VERBOSE=1')
                     args = ' '.join(make_args)
-                    command = "make {args} -j {cpu_count}".format(args=args,
-                                                                  cpu_count=tools.cpu_count())
+                    if self.settings.os == 'AIX':
+                        # Under AIX, tools.cpu_count() can't figure out how many CPUs
+                        # and /usr/bin/make  fails
+                        command = "gmake {args} -j4".format(args=args)
+                    else:
+                        command = "make {args} -j {cpu_count}".format(args=args,
+                                                                      cpu_count=tools.cpu_count())
                     self.run(command, win_bash=tools.os_info.is_windows)
                     if self.options.get_safe("with_unit_tests"):
                         command = "make {args} check".format(args=args)
