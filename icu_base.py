@@ -69,9 +69,8 @@ class ICUBase(ConanFile):
                                   "pathBuf.append('/', localError); pathBuf.append(arg, localError);")
 
     def build(self):
-        for filename in glob.glob("patches/*.patch"):
-            self.output.info('applying patch "%s"' % filename)
-            tools.patch(base_path=self._source_subfolder, patch_file=filename)
+        for patch in self.conan_data.get("patches", {}).get(self.version, []):
+            tools.patch(**patch)
 
         if self._is_msvc:
             run_configure_icu_file = os.path.join(self._source_subfolder, 'source', 'runConfigureICU')
