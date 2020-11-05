@@ -1,3 +1,15 @@
+From 02e5ffdbd98f3647bb867e9567fad799bd9249a4 Mon Sep 17 00:00:00 2001
+From: Rob Boehne <robb@datalogics.com>
+Date: Thu, 29 Oct 2020 10:56:53 -0500
+Subject: [PATCH] Ressurect support for IBM's XL compiler
+
+IBM's XL compiler can only support c++11 when the 'clang front end' is used.
+This change modifies the configure step to use xlclang and  xlclang++
+Change readme.html reference to xlC to refer to xlclang++ instead.
+---
+ icu4c/source/runConfigureICU | 20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
+
 diff --git a/icu4c/source/runConfigureICU b/icu4c/source/runConfigureICU
 index 77df3a0..65e89b9 100755
 --- a/icu4c/source/runConfigureICU
@@ -53,3 +65,6 @@ index 77df3a0..65e89b9 100755
          RELEASE_CFLAGS="-O2 -qmaxmem=-1"
          RELEASE_CXXFLAGS="-O2 -qmaxmem=-1"
          ;;
+-- 
+1.8.3.1
+
