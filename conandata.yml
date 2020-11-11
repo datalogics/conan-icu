@@ -22,3 +22,6 @@ patches:
     - patch_file: "patches/0001-Ressurect-support-for-IBM-s-XL-compiler.patch"
       base_path: "source_subfolder"
       strip: 1
+    - patch_file: "patches/backout-icu-20677.patch"
+      base_path: "source_subfolder"
+      strip: 2
