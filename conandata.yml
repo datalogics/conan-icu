@@ -25,3 +25,7 @@ patches:
     - patch_file: "patches/backout-icu-20677.patch"
       base_path: "source_subfolder"
       strip: 2
+  "68.2":
+    - patch_file: "patches/backout-icu-20677.patch"
+      base_path: "source_subfolder"
+      strip: 2
