@@ -72,8 +72,10 @@ class ICUConan(ICUBase):
 
         if not self.options.shared:
             self.cpp_info.defines.append("U_STATIC_IMPLEMENTATION")
-        if self.settings.os == 'Linux':
-            self.cpp_info.libs.append('dl')
 
-        if self.settings.os == 'Windows':
-            self.cpp_info.libs.append('advapi32')
+        if self.settings.os in ["Linux", "FreeBSD"]:
+            self.cpp_info.system_libs = ["m", "pthread"]
+            if self.options.with_dyload:
+                self.cpp_info.system_libs.append("dl")
+        elif self.settings.os == "Windows":
+            self.cpp_info.system_libs = ["advapi32"]
