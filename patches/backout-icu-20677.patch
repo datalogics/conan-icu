@@ -1,0 +1,61 @@
+diff --git a/icu4c/source/data/Makefile.in b/icu4c/source/data/Makefile.in
+index f020bc82a8..fbc22a6d97 100644
+--- a/icu4c/source/data/Makefile.in
++++ b/icu4c/source/data/Makefile.in
+@@ -240,7 +240,8 @@ include $(top_builddir)/$(subdir)/rules.mk
+ ifeq ($(ENABLE_SO_VERSION_DATA),1)
+ ifeq ($(PKGDATA_MODE),dll)
+ SO_VERSION_DATA = $(OUTTMPDIR)/icudata.res
+-$(SO_VERSION_DATA) : $(MISCSRCDIR)/icudata.rc | $(TMP_DIR)/dirs.timestamp
++$(SO_VERSION_DATA) : $(MISCSRCDIR)/icudata.rc
++	mkdir -p $(@D)
+ ifeq ($(MSYS_RC_MODE),1)
+ 	rc.exe -i$(srcdir)/../common -i$(top_builddir)/common -fo$@ $(CPPFLAGS) $<
+ else
+diff --git a/icu4c/source/extra/scrptrun/Makefile.in b/icu4c/source/extra/scrptrun/Makefile.in
+index f3f89431df..d951f66a4b 100644
+--- a/icu4c/source/extra/scrptrun/Makefile.in
++++ b/icu4c/source/extra/scrptrun/Makefile.in
+@@ -12,6 +12,9 @@ top_builddir = ../..
+ 
+ include $(top_builddir)/icudefs.mk
+ 
++## Platform-specific setup
++include @platform_make_fragment@
++
+ ## Build directory information
+ subdir = extra/scrptrun
+ 
+@@ -19,7 +22,7 @@ subdir = extra/scrptrun
+ CLEANFILES = *~ $(DEPS)
+ 
+ ## Target information
+-TARGET = srtest$(EXEEXT)
++TARGET = srtest
+ 
+ DEFS = @DEFS@
+ CPPFLAGS = @CPPFLAGS@ -I$(top_srcdir)/common -I$(top_srcdir) 
+diff --git a/icu4c/source/tools/toolutil/toolutil.cpp b/icu4c/source/tools/toolutil/toolutil.cpp
+index 7a574f41bb..9a93528e0a 100644
+--- a/icu4c/source/tools/toolutil/toolutil.cpp
++++ b/icu4c/source/tools/toolutil/toolutil.cpp
+@@ -166,11 +166,14 @@ findBasename(const char *filename) {
+     const char *basename=uprv_strrchr(filename, U_FILE_SEP_CHAR);
+ 
+ #if U_FILE_ALT_SEP_CHAR!=U_FILE_SEP_CHAR
+-    //be lenient about pathname separators on Windows, like official implementation of C++17 std::filesystem in MSVC
+-    //would be convenient to merge this loop with the one above, but alas, there is no such solution in the standard library
+-    const char *alt_basename=uprv_strrchr(filename, U_FILE_ALT_SEP_CHAR);
+-    if(alt_basename>basename) {
+-        basename=alt_basename;
++#if !(U_PLATFORM == U_PF_CYGWIN && U_PLATFORM_USES_ONLY_WIN32_API)
++    if(basename==NULL)
++#endif
++    {
++        /* Use lenient matching on Windows, which can accept either \ or /
++           This is useful for environments like Win32+CygWin which have both.
++        */
++        basename=uprv_strrchr(filename, U_FILE_ALT_SEP_CHAR);
+     }
+ #endif
+ 
