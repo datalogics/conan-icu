@@ -13,13 +13,15 @@ class ICUConan(ICUBase):
                "data_packaging": ["files", "archive", "library", "static"],
                "with_extras": [True, False],
                "with_unit_tests": [True, False],
-               "silent": [True, False]}
+               "silent": [True, False],
+               "with_dyload": [True, False]}
     default_options = {"shared": False,
                        "fPIC": True,
                        "data_packaging": "archive",
                        "with_extras": False,
                        "with_unit_tests": False,
-                       "silent": True}
+                       "silent": True,
+                       "with_dyload": True}
     generators = 'txt', 'virtualenv'
 
     def build_requirements(self):

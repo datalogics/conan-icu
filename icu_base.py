@@ -212,6 +212,8 @@ class ICUBase(ConanFile):
             args.append('--disable-extras')
         if not self.options.get_safe("with_unit_tests"):
             args.append('--disable-tests')
+        if not self.options.with_dyload:
+            args.append("--disable-dyload")
         return args
 
     @property
