@@ -17,7 +17,7 @@ class ICUConan(ICUBase):
     default_options = {"shared": False,
                        "fPIC": True,
                        "data_packaging": "archive",
-                       "with_extras": True,
+                       "with_extras": False,
                        "with_unit_tests": False,
                        "silent": True}
     generators = 'txt', 'virtualenv'
